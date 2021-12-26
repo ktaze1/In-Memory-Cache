@@ -1,158 +1,65 @@
+basePath: /
 definitions:
-  User:
-    description: User defines the structure for a Full User Record
+  CommonError:
     properties:
-      active:
-        description: Is the User Logged In or Not
-        format: int64
-        type: integer
-        x-go-name: Active
-      admin:
-        description: Is the User Admin or not
-        format: int64
-        type: integer
-        x-go-name: Admin
-      id:
+      message:
         description: |-
-          The ID for the user
-          in: body
-        format: int64
-        minimum: 1
-        type: integer
-        x-go-name: ID
-      lastlogin:
-        description: The Last Login time of the User
-        format: int64
-        minimum: 0
-        type: integer
-        x-go-name: LastLogin
-      password:
-        description: The Password of the user
+          Message of the error
+          in: string
         type: string
-        x-go-name: Password
-      username:
+        x-go-name: Message
+      status:
         description: |-
-          The Username of the user
-          in: body
-        type: string
-        x-go-name: Username
-    required:
-    - username
-    - password
-    - lastlogin
-    - admin
-    - active
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
     type: object
-    x-go-package: inmemcache/swagger
-paths:
-  /:
-    post:
-      description: Works with all HTTP methods
-      operationId: noContent
-      responses:
-        "200":
-          $ref: '#/responses/noContent'
-        "404":
-          $ref: '#/responses/ErrorMessage'
-      summary: Default Handler for everything that is not a match.
-      tags:
-      - DefaultHandler
-  /add:
-    put:
-      description: Create a new User
-      operationId: createUser
-      responses:
-        "200":
-          $ref: '#/responses/OK'
-        "400":
-          $ref: '#/responses/BadRequest'
-      tags:
-      - UserInput
-  /delete/{id}:
-    delete:
-      description: The command should be issued by an admin user
-      operationId: deleteID
-      parameters:
-      - description: The user id to be deleted
+    x-go-package: inmemcache/docs
+  CommonSuccess:
+    properties:
+      message:
+        description: |-
+          Message of the error
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
         format: int64
-        in: path
-        name: id
-        required: true
         type: integer
-        x-go-name: ID
+        x-go-name: Status
+    type: object
+    x-go-package: inmemcache/docs
+host: localhost:5000
+info:
+  title: 'Comapany Api:'
+  version: 0.0.1
+paths:
+  /products/{id}:
+    delete:
+      description: Update a products details
+      operationId: deleteProduct
       responses:
-        "200":
-          $ref: '#/responses/noContent'
+        "201":
+          $ref: '#/responses/noContentResponse'
         "404":
-          $ref: '#/responses/ErrorMessage'
-      summary: Delete a user given their ID.
+          $ref: '#/responses/errorResponse'
+        "501":
+          $ref: '#/responses/errorResponse'
       tags:
-      - DeleteUser
-  /getid:
-    get:
-      description: Returns the ID of a User given their username and password
-      operationId: loggedInfo
-      parameters:
-      - description: A list of users
-        in: body
-        name: Body
-        schema:
-          $ref: '#/definitions/User'
-      responses:
-        "200":
-          $ref: '#/responses/OK'
-        "400":
-          $ref: '#/responses/BadRequest'
-      tags:
-      - getUserId
-  /logged:
-    get:
-      description: Returns a list of logged in users
-      operationId: getUserInfo
-      parameters:
-      - description: A list of users
-        in: body
-        name: Body
-        schema:
-          $ref: '#/definitions/User'
-      responses:
-        "200":
-          $ref: '#/responses/UsersResponse'
-        "400":
-          $ref: '#/responses/BadRequest'
-      tags:
-      - logged
-  /login:
-    post:
-      description: Login an existing user
-      operationId: getLoginInfo
-      responses:
-        "200":
-          $ref: '#/responses/OK'
-        "400":
-          $ref: '#/responses/BadRequest'
-      tags:
-      - user
-  /time:
-    get:
-      description: Return current time
-      operationId: getTime
-      responses:
-        "200":
-          $ref: '#/responses/OK'
-responses:
-  BadRequest:
-    description: Generic BadRequest message returned as an HTTP Status Code
-  ErrorMessage:
-    description: Generic error message returned as an HTTP Status Code
-  OK:
-    description: Generic OK message returned as an HTTP Status Code
-  UsersResponse:
-    description: A list of Users
-    schema:
-      items:
-        $ref: '#/definitions/User'
-      type: array
-  noContent:
-    description: Generic noContent message returned as an HTTP Status Code
+      - products
+produces:
+- application/json
+schemes:
+- http
+- https
+securityDefinitions:
+  apiKey:
+    in: header
+    name: authorization
+    type: apiKey
 swagger: "2.0"

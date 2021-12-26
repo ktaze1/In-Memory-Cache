@@ -1,3 +1,18 @@
+//  Comapany Api:
+//   version: 0.0.1
+//   title: Comapany Api
+//  Schemes: http, https
+//  Host: localhost:5000
+//  BasePath: /
+//  Produces:
+//    - application/json
+//
+// securityDefinitions:
+//  apiKey:
+//    type: apiKey
+//    in: header
+//    name: authorization
+// swagger:meta
 package main
 
 import (
@@ -6,6 +21,8 @@ import (
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/rs/cors"
 
 	middleware "github.com/go-openapi/runtime/middleware"
 	"github.com/gorilla/mux"
@@ -56,6 +73,13 @@ func getKeyHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("GET REQUEST key=%s\n", key)
 }
 
+// swagger:route DELETE /products/{id} products deleteProduct
+// Update a products details
+//
+// responses:
+//	201: noContentResponse
+//  404: errorResponse
+//  501: errorResponse
 func keyValueDeleteHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	key := vars["key"]
@@ -100,7 +124,10 @@ func main() {
 
 	opts := middleware.SwaggerUIOpts{SpecURL: "./swagger.yaml"}
 	sh := middleware.SwaggerUI(opts, nil)
-	r.Handle("/docs", sh)
-	log.Fatal(http.ListenAndServe(":8080", r))
+	r.Handle("/docs", sh).Methods("GET", "OPTIONS")
+
+	r.Handle("/swagger.yaml", http.FileServer(http.Dir("./")))
+	corshandler := cors.AllowAll().Handler(r)
+	log.Fatal(http.ListenAndServe(":8080", corshandler))
 	t.Stop()
 }

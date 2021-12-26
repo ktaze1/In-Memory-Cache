@@ -24,6 +24,7 @@ require (
 	github.com/mailru/easyjson v0.7.6 // indirect
 	github.com/mitchellh/mapstructure v1.4.1 // indirect
 	github.com/oklog/ulid v1.3.1 // indirect
+	github.com/rs/cors v1.8.2 // indirect
 	go.mongodb.org/mongo-driver v1.7.3 // indirect
 	golang.org/x/net v0.0.0-20210421230115-4e50805a0758 // indirect
 	golang.org/x/text v0.3.7 // indirect
