@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"os"
 	"sync"
 )
 
@@ -25,6 +26,10 @@ func Flush() error {
 	store.Lock()
 	fmt.Println("Flushed")
 	store.m = make(map[string]string)
+	err := os.Remove("./file.tmp")
+	if err != nil {
+		return err
+	}
 	store.Unlock()
 
 	return nil
