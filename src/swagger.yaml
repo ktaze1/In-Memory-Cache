@@ -1,59 +1,95 @@
 basePath: /
-definitions:
-  CommonError:
-    properties:
-      message:
-        description: |-
-          Message of the error
-          in: string
-        type: string
-        x-go-name: Message
-      status:
-        description: |-
-          Status of the error
-          in: int64
-        format: int64
-        type: integer
-        x-go-name: Status
-    type: object
-    x-go-package: inmemcache/docs
-  CommonSuccess:
-    properties:
-      message:
-        description: |-
-          Message of the error
-          in: string
-        type: string
-        x-go-name: Message
-      status:
-        description: |-
-          Status of the error
-          in: int64
-        format: int64
-        type: integer
-        x-go-name: Status
-    type: object
-    x-go-package: inmemcache/docs
 host: localhost:5000
 info:
   title: 'Comapany Api:'
   version: 0.0.1
 paths:
-  /products/{id}:
+  /flush:
     delete:
-      description: Update a products details
-      operationId: deleteProduct
+      description: Delete record of given key
+      operationId: key
+      parameters:
+      - description: The key of the record for which the operation relates
+        in: path
+        name: string
+        required: true
+        type: string
+        x-go-name: KEY
+      responses:
+        "200":
+          $ref: '#/responses/commonResponse'
+        "500":
+          $ref: '#/responses/commonResponse'
+  /v1/:
+    delete:
+      description: Delete record of given key
+      operationId: key
+      parameters:
+      - description: The key of the record for which the operation relates
+        in: path
+        name: string
+        required: true
+        type: string
+        x-go-name: KEY
+      responses:
+        "200":
+          $ref: '#/responses/commonResponse'
+        "500":
+          $ref: '#/responses/commonResponse'
+    get:
+      description: Delete record of given key
+      operationId: key
+      parameters:
+      - description: The key of the record for which the operation relates
+        in: path
+        name: string
+        required: true
+        type: string
+        x-go-name: KEY
+      responses:
+        "200":
+          $ref: '#/responses/commonResponse'
+        "500":
+          $ref: '#/responses/commonResponse'
+    put:
+      consumes:
+      - text/plain
+      description: Add record of given key
+      operationId: value
+      parameters:
+      - description: The key of the record for which the operation relates
+        in: path
+        name: VALUE
+        required: true
+        schema:
+          type: string
+      - description: The key of the record for which the operation relates
+        in: body
+        name: VALUE
+        required: true
+        schema:
+          type: string
       responses:
         "201":
-          $ref: '#/responses/noContentResponse'
+          $ref: '#/responses/commonResponse'
         "404":
-          $ref: '#/responses/errorResponse'
-        "501":
-          $ref: '#/responses/errorResponse'
-      tags:
-      - products
+          $ref: '#/responses/commonResponse'
 produces:
 - application/json
+responses:
+  commonResponse:
+    description: ""
+    schema:
+      properties:
+        Message:
+          description: The response message
+          example: Given key not found
+          type: string
+      required:
+      - Message
+      type: object
+  noContentResponse:
+    description: ""
 schemes:
 - http
 - https

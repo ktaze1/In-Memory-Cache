@@ -32,6 +32,13 @@ func notAllowedHandler(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Not Allowed", http.StatusMethodNotAllowed)
 }
 
+// swagger:route PUT /v1/ value
+// Add record of given key
+// consumes:
+//  - text/plain
+// responses:
+//	201: commonResponse
+//  404: commonResponse
 func setKeyHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	key := vars["key"]
@@ -54,6 +61,12 @@ func setKeyHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("PUT REQUEST key=%s value=%s\n", key, string(value))
 }
 
+// swagger:route GET /v1/ key
+// Get record of given key
+//
+// responses:
+//	200: commonResponse
+//  404: commonResponse
 func getKeyHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	key := vars["key"]
@@ -73,13 +86,13 @@ func getKeyHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("GET REQUEST key=%s\n", key)
 }
 
-// swagger:route DELETE /products/{id} products deleteProduct
-// Update a products details
+// swagger:route DELETE /v1/ key
+// Delete record of given key
 //
 // responses:
-//	201: noContentResponse
-//  404: errorResponse
-//  501: errorResponse
+//	200: commonResponse
+//  404: commonResponse
+//  500: commonResponse
 func keyValueDeleteHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	key := vars["key"]
@@ -92,6 +105,13 @@ func keyValueDeleteHandler(w http.ResponseWriter, r *http.Request) {
 
 	log.Printf("DELETE key=%s\n", key)
 }
+
+// swagger:route DELETE /flush key
+// Delete record of given key
+//
+// responses:
+//	200: commonResponse
+//  500: commonResponse
 func flushHandler(w http.ResponseWriter, r *http.Request) {
 	err := Flush()
 	if err != nil {
@@ -128,6 +148,6 @@ func main() {
 
 	r.Handle("/swagger.yaml", http.FileServer(http.Dir("./")))
 	corshandler := cors.AllowAll().Handler(r)
-	log.Fatal(http.ListenAndServe(":8080", corshandler))
+	log.Fatal(http.ListenAndServe(":5000", corshandler))
 	t.Stop()
 }

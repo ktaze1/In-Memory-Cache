@@ -1,29 +1,34 @@
 package main
 
-// swagger:model CommonError
-type CommonError struct {
-	// Status of the error
-	// in: int64
-	Status int64 `json:"status"`
-	// Message of the error
-	// in: string
-	Message string `json:"message"`
-}
-
-// swagger:model CommonSuccess
-type CommonSuccess struct {
-	// Status of the error
-	// in: int64
-	Status int64 `json:"status"`
-	// Message of the error
-	// in: string
-	Message string `json:"message"`
-}
-
-// swagger:parameters updateProduct
-type productIDParamsWrapper struct {
-	// The id of the product for which the operation relates
+// swagger:parameters key
+type recordIdWrapper struct {
+	// The key of the record for which the operation relates
 	// in: path
 	// required: true
-	ID int `json:"id"`
+	KEY string `json:"string"`
+}
+
+// swagger:parameters value
+type recordValueWrapper struct {
+	// The key of the record for which the operation relates
+	// in: body
+	// required: true
+	VALUE string `"string"`
+}
+
+// swagger:response noContentResponse
+type noContentResponseWrapper struct {
+}
+
+// swagger:response commonResponse
+type commonResponseWrapper struct {
+	// The message
+	// in: body
+	Body struct {
+		// The response message
+		//
+		// Required: true
+		// Example: Given key not found
+		Message string
+	}
 }
