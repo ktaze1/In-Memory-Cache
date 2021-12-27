@@ -29,7 +29,7 @@ This repo initially made for a coding challange for building a in-memory key-val
 
 ### What about online?
 
-  - It's deployed to GCP, you can see the swagger doc at http://34.159.135.206:8080/docs
+  - It's deployed to GCP, you can see the swagger doc at http://34.141.51.210:8080/docs
 
 
 ### Operations
@@ -55,6 +55,7 @@ This repo initially made for a coding challange for building a in-memory key-val
     <img src="firstGoal.png">
     <br/>
   </p>
+  
   - Needs proper testing. There are few tests available but needs extensive test cases
   - Still not highly available. Needs master-slave to ensure availability
   <p align="center">
