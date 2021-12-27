@@ -1,8 +1,8 @@
-//  Comapany Api:
+//  Api:
 //   version: 0.0.1
-//   title: Comapany Api
+//   title: Key-Value Store Api
 //  Schemes: http, https
-//  Host: localhost:5000
+//  Host: localhost:8080
 //  BasePath: /
 //  Produces:
 //    - application/json
@@ -127,14 +127,13 @@ func main() {
 	if err := Load("./file.tmp", store.m); err != nil {
 		log.Println(err)
 	}
-	t := schedule(Save, 20*time.Second)
+	t := schedule(Save, 10*time.Minute)
 
 	r := mux.NewRouter()
 
 	r.Use(logger)
 
 	r.HandleFunc("/v1/{key}", getKeyHandler).Methods("GET")
-
 	r.HandleFunc("/v1/{key}", setKeyHandler).Methods("PUT")
 	r.HandleFunc("/v1/{key}", keyValueDeleteHandler).Methods("DELETE")
 	r.HandleFunc("/flush", flushHandler).Methods("DELETE")
@@ -142,12 +141,15 @@ func main() {
 	r.HandleFunc("/v1", notAllowedHandler)
 	r.HandleFunc("/v1/{key}", notAllowedHandler)
 
+	// Swagger
 	opts := middleware.SwaggerUIOpts{SpecURL: "./swagger.yaml"}
 	sh := middleware.SwaggerUI(opts, nil)
 	r.Handle("/docs", sh).Methods("GET", "OPTIONS")
 
 	r.Handle("/swagger.yaml", http.FileServer(http.Dir("./")))
 	corshandler := cors.AllowAll().Handler(r)
-	log.Fatal(http.ListenAndServe(":5000", corshandler))
+
+	log.Fatal(http.ListenAndServe(":8080", corshandler))
+	
 	t.Stop()
 }
