@@ -1,7 +1,7 @@
 # In-Memory-Cache
 
 
-This repo initially made for a coding challange for building a in-memory key-value storage app but seems like this grow than it's initial expectations...
+This repo initially made for a coding challange for building a in-memory key-value storage app but seems like this will grow than it's initial expectations... Feel free to review or even use it.
 
 
 ### What's it ? 
