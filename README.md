@@ -29,7 +29,7 @@ This repo initially made for a coding challange for building a in-memory key-val
 
 ### What about online?
 
-  - It's deployed to GCP, you can see the swagger doc at http://34.159.135.206:8080
+  - It's deployed to GCP, you can see the swagger doc at http://34.159.135.206:8080/docs
 
 
 ### Operations
