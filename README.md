@@ -39,6 +39,15 @@ This repo initially made for a coding challange for building a in-memory key-val
   - DELETE(key) : Deletes the record of given key | path: v1/{key}
   - FLUSH() : Deletes entire dictionary  | path: /flush
 
+#### Sample cURL
+
+  - GET record "test" `curl --request GET 'http://34.141.51.210:8080/v1/test` 
+  - SET record "test" as "Hello World" `curl -X PUT -d 'Hello World' -v http://34.141.51.210:8080/v1/test`
+  - DELETE record "test" `curl --request DELETE 'http://34.141.51.210:8080/v1/test`
+  - FLUSH all records `curl --request DELETE 'http://34.141.51.210:8080/flush`
+ 
+  You can change IP address with localhost or wherever you're running the app
+ 
 ### Advantages
  
  - All operations depending on Go's map, which is a hash map that has O(1) look up 
