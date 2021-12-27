@@ -51,9 +51,15 @@ This repo initially made for a coding challange for building a in-memory key-val
 
 
   - First goal is to re-write endpoints properly to load-balance to its shards
-  [image](./firstGoal.png)
+  <p align="center">
+    <img src="images/firstGoal.png">
+    <br/>
+  </p>
   - Needs proper testing. There are few tests available but needs extensive test cases
   - Still not highly available. Needs master-slave to ensure availability
-  [HASys](./secondGoal.png)
+  <p align="center">
+    <img src="images/secondGoal.png">
+    <br/>
+  </p>
   - Needs system monitor/health checker service when service counts goes up
   - Needs to fix Swagger, it does not properly tests endpoints
